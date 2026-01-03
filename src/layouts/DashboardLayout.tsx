@@ -33,7 +33,7 @@ const DashboardLayoutContent: React.FC<DashboardLayoutProps> = ({ children }) =>
     <div className="min-h-screen font-mono">
       <ScaffoldBackground />
 
-      <div className={`flex min-h-screen transition-all duration-300 ${appWidth === 'narrow' ? 'max-w-[80vw] mx-auto border-x theme-border shadow-2xl' : ''}`}>
+      <div className={`flex min-h-screen transition-all duration-300 ${appWidth === 'narrow' ? 'lg:max-w-[80vw] lg:mx-auto lg:border-x theme-border lg:shadow-2xl' : ''}`}>
         <Sidebar
           isOpen={isSidebarOpen}
           onClose={closeSidebar}

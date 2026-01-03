@@ -4,7 +4,7 @@ import { useTheme } from '../contexts/ThemeContext'
 import { Menu, X } from 'lucide-react'
 
 export const MarketingHeader: React.FC = () => {
-  const { theme, toggleTheme } = useTheme()
+  const { toggleTheme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
 
   const navLinks = [
@@ -22,7 +22,7 @@ export const MarketingHeader: React.FC = () => {
       <Link to="/" className="font-black text-2xl tracking-tighter uppercase theme-text hover:text-axon-accent transition-colors">
         Axon.Sys
       </Link>
-      
+
       <nav className="flex items-center gap-8 lg:gap-12 font-mono text-xs uppercase">
         {navLinks.map((link) => (
           <a
@@ -33,7 +33,7 @@ export const MarketingHeader: React.FC = () => {
             {link.label}
           </a>
         ))}
-        
+
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}

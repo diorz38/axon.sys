@@ -1,5 +1,4 @@
 import React from 'react'
-import { createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from '../../components/DataTable'
 import { StatCard } from '../../components/StatCard'
@@ -61,7 +60,7 @@ const columns: ColumnDef<typeof projectsData[number]>[] = [
       return (
         <div className="flex items-center gap-2">
           <div className="w-24 h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-axon-accent transition-all"
               style={{ width: value }}
             />
@@ -113,9 +112,9 @@ export const ProjectsListPage: React.FC = () => {
       </div>
 
       {/* Data Table */}
-      <DataTable 
-        data={projectsData} 
-        columns={columns} 
+      <DataTable
+        data={projectsData}
+        columns={columns}
         pageSize={10}
       />
     </>

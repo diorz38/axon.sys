@@ -9,7 +9,6 @@ import {
   ChevronDown,
   Settings
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
 import { useModule } from '../contexts/ModuleContext'
 import { MODULE_CONFIG, type ModuleType } from '../types/modules'
 
@@ -96,7 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
           {/* Module Dropdown Menu */}
           {isModuleDropdownOpen && (
             <div className="absolute top-full left-4 right-4 mt-2 bg-[var(--color-bg)] border theme-border rounded-lg shadow-lg overflow-hidden z-50">
-              {MODULE_CONFIG.map((module, index) => (
+              {MODULE_CONFIG.map((module) => (
                 <React.Fragment key={module.id}>
                   {module.id === 'admin' && (
                     <div className="border-t theme-border" />

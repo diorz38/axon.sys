@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   useReactTable,
   getCoreRowModel,
@@ -32,7 +32,7 @@ export function DataTable<T>({ data, columns, pageSize = 10 }: DataTableProps<T>
   })
 
   return (
-    <div className="theme-surface border border-white/10 rounded-lg overflow-hidden">
+    <div className="theme-surface border border-white/10 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-black/5 dark:bg-white/5 border-b border-white/10">
