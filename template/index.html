@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON | Tectonic Office Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@300;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'axon-accent': '#ff4d00',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1)',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme variables */
+        :root {
+            --bg: #f5f5f5;
+            --bg-surface: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --structural: #e0e0e0;
+            --grid-line: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark {
+            --bg: #0a0a0a;
+            --bg-surface: #141414;
+            --text: #f0f0f0;
+            --text-muted: #888888;
+            --structural: #222222;
+            --grid-line: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .theme-bg {
+            background-color: var(--bg);
+        }
+
+        .theme-surface {
+            background-color: var(--bg-surface);
+        }
+
+        .theme-text {
+            color: var(--text);
+        }
+
+        .theme-text-muted {
+            color: var(--text-muted);
+        }
+
+        .theme-border {
+            border-color: var(--structural);
+        }
+
+        .scaffold-bg {
+            background-image:
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-button {
+            box-shadow: 8px 8px 0px #000;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 12px 12px 0px #000;
+        }
+
+        .cta-button-alt {
+            box-shadow: 8px 8px 0px #ff4d00;
+        }
+
+        .cta-button-alt:hover {
+            box-shadow: 12px 12px 0px #ff4d00;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .theme-toggle:hover {
+            color: #ff4d00;
+        }
+
+        /* Light mode slab */
+        .slab-section {
+            background-color: var(--text);
+            color: var(--bg);
+        }
+    </style>
+</head>
+
+<body class="font-inter overflow-x-hidden leading-tight transition-colors duration-300">
+
+    <!-- Tectonic Scaffolding Grid Background -->
+    <div class="scaffold-bg fixed inset-0 -z-10"></div>
+
+    <!-- Main Container -->
+    <div class="grid grid-cols-12 w-full max-w-[1600px] mx-auto border-l border-r theme-border">
+
+        <!-- Header -->
+        <header
+            class="col-span-12 flex justify-between items-center p-8 border-b theme-border backdrop-blur-md sticky top-0 z-50"
+            style="background-color: var(--bg); opacity: 0.95;">
+            <div class="font-black text-2xl tracking-tighter uppercase">Axon.Sys</div>
+            <nav class="flex items-center gap-8 lg:gap-12 font-mono text-xs uppercase">
+                <a href="#"
+                    class="theme-text-muted hover:text-axon-accent transition-colors duration-300 hidden sm:block">Architecture</a>
+                <a href="#"
+                    class="theme-text-muted hover:text-axon-accent transition-colors duration-300 hidden sm:block">Modules</a>
+                <a href="#"
+                    class="theme-text-muted hover:text-axon-accent transition-colors duration-300 hidden md:block">Integration</a>
+                <a href="#"
+                    class="theme-text-muted hover:text-axon-accent transition-colors duration-300 hidden md:block">Contact</a>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle"
+                    class="theme-toggle px-3 py-2 border theme-border text-xs uppercase tracking-wider transition-colors hover:border-axon-accent">
+                    <span class="dark:hidden">☀ LIGHT</span>
+                    <span class="hidden dark:inline">☾ DARK</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="col-span-12 min-h-[80vh] grid grid-cols-12 border-b theme-border">
+            <!-- Hero Title -->
+            <div
+                class="col-span-12 lg:col-span-8 p-8 lg:py-16 border-b lg:border-b-0 lg:border-r theme-border flex flex-col justify-center">
+                <h1
+                    class="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase mb-8 animate-slide-up">
+                    Static Space.<br>Dynamic Flow.
+                </h1>
+            </div>
+
+            <!-- Hero Meta -->
+            <div
+                class="col-span-12 lg:col-span-4 p-8 lg:py-16 flex flex-col justify-between font-mono bg-axon-accent/[0.02]">
+                <div>
+                    <span class="text-xs text-axon-accent block mb-4">// SYSTEM_VERSION_4.0</span>
+                    <p class="text-base theme-text-muted leading-relaxed">A tectonic approach to workspace management.
+                        We build the scaffolding for high-performance teams to scale without friction.</p>
+                </div>
+                <div class="mt-16">
+                    <a href="#"
+                        class="cta-button inline-block bg-axon-accent text-white py-6 px-12 font-mono font-bold uppercase no-underline">Initialize
+                        Setup</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Grid Section -->
+        <section class="col-span-12 grid grid-cols-1 md:grid-cols-3 border-b theme-border">
+            <!-- Feature 1 -->
+            <div
+                class="feature-item reveal p-8 lg:p-12 border-b md:border-b-0 md:border-r theme-border relative overflow-hidden hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors duration-400">
+                <span class="font-mono text-axon-accent text-sm block mb-16">01 / LOGISTICS</span>
+                <h3 class="text-3xl font-bold uppercase mb-4">Kinetic Routing</h3>
+                <p class="theme-text-muted text-sm leading-relaxed">Automated desk and resource allocation that shifts
+                    with your team's real-time density and project needs.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div
+                class="feature-item reveal p-8 lg:p-12 border-b md:border-b-0 md:border-r theme-border relative overflow-hidden hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors duration-400">
+                <span class="font-mono text-axon-accent text-sm block mb-16">02 / INFRASTRUCTURE</span>
+                <h3 class="text-3xl font-bold uppercase mb-4">Deep Stack</h3>
+                <p class="theme-text-muted text-sm leading-relaxed">Integrate every peripheral, climate sensor, and
+                    security node into a single command-line interface.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div
+                class="feature-item reveal p-8 lg:p-12 relative overflow-hidden hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors duration-400">
+                <span class="font-mono text-axon-accent text-sm block mb-16">03 / ANALYTICS</span>
+                <h3 class="text-3xl font-bold uppercase mb-4">Grid Logic</h3>
+                <p class="theme-text-muted text-sm leading-relaxed">Predictive spatial modeling. Understand how your
+                    office breathes before you sign the next lease.</p>
+            </div>
+        </section>
+
+        <!-- Slab Section -->
+        <section class="col-span-12 py-32 px-8 flex items-center justify-center slab-section relative">
+            <div class="reveal text-center max-w-3xl">
+                <span class="font-mono text-xs opacity-50 block mb-4">// RECONSTRUCT_WORK</span>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tight">The end of the generic
+                    office dashboard.</h2>
+                <p class="mb-12 text-xl opacity-80">AXON is a structural framework for the modern enterprise, treating
+                    space as a variable, not a constant.</p>
+                <a href="#"
+                    class="cta-button cta-button-alt inline-block bg-black dark:bg-white text-white dark:text-black py-6 px-12 font-mono font-bold uppercase no-underline">Deploy
+                    Infrastructure</a>
+            </div>
+        </section>
+
+        <!-- Metrics Section -->
+        <section class="col-span-12 grid grid-cols-2 lg:grid-cols-4 border-b theme-border">
+            <!-- Metric 1 -->
+            <div class="reveal py-16 px-8 border-r border-b lg:border-b-0 theme-border text-center">
+                <span class="font-mono text-5xl block mb-2">42%</span>
+                <span class="uppercase text-[0.7rem] tracking-[0.2em] theme-text-muted">Efficiency Gain</span>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="reveal py-16 px-8 border-b lg:border-b-0 lg:border-r theme-border text-center">
+                <span class="font-mono text-5xl block mb-2">0.4s</span>
+                <span class="uppercase text-[0.7rem] tracking-[0.2em] theme-text-muted">System Latency</span>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="reveal py-16 px-8 border-r theme-border text-center">
+                <span class="font-mono text-5xl block mb-2">12k+</span>
+                <span class="uppercase text-[0.7rem] tracking-[0.2em] theme-text-muted">Nodes Managed</span>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="reveal py-16 px-8 text-center">
+                <span class="font-mono text-5xl block mb-2">∞</span>
+                <span class="uppercase text-[0.7rem] tracking-[0.2em] theme-text-muted">Scalability</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer
+            class="col-span-12 py-16 px-8 flex flex-col md:flex-row justify-between gap-4 font-mono theme-text-muted text-xs">
+            <div>© 2024 AXON SYSTEMIC LTD.</div>
+            <div>ST_GRID_01 // LONDON_OPERATIONS</div>
+            <div>BUILT_ON_TECTONIC_V4</div>
+        </footer>
+    </div>
+
+    <script>
+        // Reveal elements on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Hover effect for the tectonic background
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.querySelector('.scaffold-bg').style.maskImage = `radial-gradient(circle at ${x}% ${y}%, black, transparent)`;
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('axon-theme') || 'dark';
+        html.classList.remove('dark', 'light');
+        html.classList.add(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            html.classList.remove('dark', 'light');
+            html.classList.add(isDark ? 'light' : 'dark');
+            localStorage.setItem('axon-theme', isDark ? 'light' : 'dark');
+        });
+    </script>
+</body>
+
+</html>

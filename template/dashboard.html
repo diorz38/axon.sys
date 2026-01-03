@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON | Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'axon-accent': '#ff4d00',
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme variables */
+        :root {
+            --bg: #f5f5f5;
+            --bg-surface: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --structural: #e0e0e0;
+            --grid-line: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark {
+            --bg: #0a0a0a;
+            --bg-surface: #141414;
+            --text: #f0f0f0;
+            --text-muted: #888888;
+            --structural: #222222;
+            --grid-line: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .theme-bg {
+            background-color: var(--bg);
+        }
+
+        .theme-surface {
+            background-color: var(--bg-surface);
+        }
+
+        .theme-text {
+            color: var(--text);
+        }
+
+        .theme-text-muted {
+            color: var(--text-muted);
+        }
+
+        .theme-border {
+            border-color: var(--structural);
+        }
+
+        .divide-theme > * + * {
+            border-color: var(--structural);
+        }
+
+        .scaffold-bg {
+            background-image:
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at 30% 30%, black, transparent 70%);
+        }
+
+        .sidebar-link.active {
+            background: rgba(255, 77, 0, 0.1);
+            border-left-color: #ff4d00;
+            color: #ff4d00;
+        }
+
+        .stat-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .dark .stat-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .light .stat-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--structural);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .theme-toggle:hover {
+            color: #ff4d00;
+        }
+    </style>
+</head>
+
+<body class="font-mono transition-colors duration-300">
+
+    <!-- Tectonic Scaffolding Grid Background -->
+    <div class="scaffold-bg fixed inset-0 -z-10"></div>
+
+    <div class="flex min-h-screen">
+
+        <!-- Mobile Backdrop -->
+        <div id="mobile-backdrop" class="fixed inset-0 bg-black/50 z-40 lg:hidden hidden transition-opacity opacity-0"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 border-r theme-border theme-bg backdrop-blur-md flex flex-col fixed h-full z-50 lg:z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0"
+            style="background-color: var(--bg); opacity: 0.95;">
+
+            <!-- Sidebar Header -->
+            <div class="p-6 border-b theme-border">
+                <div class="font-black text-xl tracking-tighter uppercase">Axon.Sys</div>
+                <div class="text-[0.65rem] uppercase theme-text-muted mt-1">// ADMIN_PANEL_V4</div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 py-6 overflow-y-auto">
+                <div class="px-4 mb-4">
+                    <span class="text-[0.65rem] uppercase theme-text-muted tracking-wider">Main Menu</span>
+                </div>
+
+                <a href="#"
+                    class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                    Dashboard
+                </a>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    Analytics
+                </a>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    Teams
+                </a>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    Modules
+                </a>
+
+                <div class="px-4 mt-8 mb-4">
+                    <span class="text-[0.65rem] uppercase theme-text-muted tracking-wider">Infrastructure</span>
+                </div>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                    </svg>
+                    Nodes
+                </a>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Settings
+                </a>
+
+                <a href="#"
+                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm theme-text-muted border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Logs
+                </a>
+            </nav>
+
+            <!-- User Section -->
+            <div class="p-4 border-t theme-border">
+                <div
+                    class="flex items-center gap-3 p-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                    <div
+                        class="w-9 h-9 rounded bg-axon-accent/20 flex items-center justify-center font-bold text-axon-accent text-sm">
+                        OP
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium">Operator</div>
+                        <div class="text-[0.65rem] theme-text-muted">ADMIN_LVL_3</div>
+                    </div>
+                    <svg class="w-4 h-4 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64">
+
+            <!-- Top Header -->
+            <header class="sticky top-0 z-30 backdrop-blur-md border-b theme-border"
+                style="background-color: var(--bg); opacity: 0.95;">
+                <div class="flex items-center justify-between px-4 md:px-8 py-4">
+                    <div class="flex items-center gap-4">
+                        <!-- Mobile Menu Toggle -->
+                        <button id="mobile-menu-toggle" class="lg:hidden p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors">
+                            <svg class="w-5 h-5 theme-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <div>
+                            <h1 class="text-xl font-bold">Dashboard</h1>
+                            <p class="text-xs theme-text-muted mt-1">// SYSTEM_OVERVIEW_REAL_TIME</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-4">
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle"
+                            class="theme-toggle px-3 py-2 border theme-border text-xs uppercase tracking-wider transition-colors hover:border-axon-accent">
+                            <span class="dark:hidden">☀ LIGHT</span>
+                            <span class="hidden dark:inline">☾ DARK</span>
+                        </button>
+                        <div
+                            class="hidden md:flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-500/30 rounded text-green-500 dark:text-green-400 text-xs">
+                            <span class="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-pulse"></span>
+                            ALL SYSTEMS ONLINE
+                        </div>
+                        <button class="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors">
+                            <svg class="w-5 h-5 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="p-4 md:p-8">
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
+
+                    <!-- Stat Card 1 -->
+                    <div class="stat-card theme-surface border theme-border p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs text-axon-accent">// NODES</span>
+                            <svg class="w-5 h-5 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+                            </svg>
+                        </div>
+                        <div class="text-4xl font-bold mb-1">12,847</div>
+                        <div class="text-xs theme-text-muted uppercase tracking-wider">Active Connections</div>
+                        <div class="mt-4 flex items-center gap-2 text-green-500 dark:text-green-400 text-xs">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                            </svg>
+                            +12.5% from last week
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="stat-card theme-surface border theme-border p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs text-axon-accent">// LATENCY</span>
+                            <svg class="w-5 h-5 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <div class="text-4xl font-bold mb-1">0.4<span class="text-xl">s</span></div>
+                        <div class="text-xs theme-text-muted uppercase tracking-wider">Avg Response Time</div>
+                        <div class="mt-4 flex items-center gap-2 text-green-500 dark:text-green-400 text-xs">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                            -8.2% improved
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 3 -->
+                    <div class="stat-card theme-surface border theme-border p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs text-axon-accent">// EFFICIENCY</span>
+                            <svg class="w-5 h-5 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <div class="text-4xl font-bold mb-1">94.2<span class="text-xl">%</span></div>
+                        <div class="text-xs theme-text-muted uppercase tracking-wider">System Efficiency</div>
+                        <div class="mt-4 flex items-center gap-2 text-green-500 dark:text-green-400 text-xs">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                            </svg>
+                            +3.1% from baseline
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 4 -->
+                    <div class="stat-card theme-surface border theme-border p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs text-axon-accent">// TEAMS</span>
+                            <svg class="w-5 h-5 theme-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <div class="text-4xl font-bold mb-1">248</div>
+                        <div class="text-xs theme-text-muted uppercase tracking-wider">Active Operators</div>
+                        <div class="mt-4 flex items-center gap-2 theme-text-muted text-xs">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                            </svg>
+                            No change
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two Column Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+
+                    <!-- Activity Feed -->
+                    <div class="lg:col-span-2 theme-surface border theme-border">
+                        <div class="p-4 md:p-6 border-b theme-border flex items-center justify-between">
+                            <div>
+                                <h2 class="font-bold text-lg">System Activity</h2>
+                                <p class="text-xs theme-text-muted mt-1">// REAL_TIME_LOG_STREAM</p>
+                            </div>
+                            <button
+                                class="px-4 py-2 border theme-border text-xs uppercase hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                View All
+                            </button>
+                        </div>
+                        <div class="divide-y divide-theme">
+                            <!-- Log Entry -->
+                            <div class="p-3 md:p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-green-500 dark:bg-green-400"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-sm">Node cluster expanded</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-green-500/10 text-green-600 dark:text-green-400 text-[0.65rem] rounded">SUCCESS</span>
+                                        </div>
+                                        <p class="text-xs theme-text-muted mt-1">Added 24 new nodes to SECTOR_ALPHA
+                                            infrastructure grid.</p>
+                                        <span class="text-[0.65rem] theme-text-muted mt-2 block">2 minutes ago</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Log Entry -->
+                            <div class="p-3 md:p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-axon-accent"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-sm">Maintenance scheduled</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-axon-accent/10 text-axon-accent text-[0.65rem] rounded">PENDING</span>
+                                        </div>
+                                        <p class="text-xs theme-text-muted mt-1">Routine diagnostics planned for GRID_07
+                                            at 03:00 UTC.</p>
+                                        <span class="text-[0.65rem] theme-text-muted mt-2 block">15 minutes ago</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Log Entry -->
+                            <div class="p-3 md:p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-sm">New operator onboarded</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[0.65rem] rounded">INFO</span>
+                                        </div>
+                                        <p class="text-xs theme-text-muted mt-1">User JKL_0042 granted ADMIN_LVL_2
+                                            access credentials.</p>
+                                        <span class="text-[0.65rem] theme-text-muted mt-2 block">1 hour ago</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Log Entry -->
+                            <div class="p-3 md:p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 mt-2 rounded-full bg-green-500 dark:bg-green-400"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-sm">Security scan complete</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-green-500/10 text-green-600 dark:text-green-400 text-[0.65rem] rounded">SUCCESS</span>
+                                        </div>
+                                        <p class="text-xs theme-text-muted mt-1">Full perimeter scan completed. No
+                                            anomalies detected.</p>
+                                        <span class="text-[0.65rem] theme-text-muted mt-2 block">2 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="theme-surface border theme-border">
+                        <div class="p-4 md:p-6 border-b theme-border">
+                            <h2 class="font-bold text-lg">Quick Actions</h2>
+                            <p class="text-xs theme-text-muted mt-1">// COMMAND_SHORTCUTS</p>
+                        </div>
+                        <div class="p-3 md:p-4 space-y-3">
+                            <button
+                                class="w-full p-3 md:p-4 border theme-border text-left hover:bg-black/5 dark:hover:bg-white/5 hover:border-axon-accent/50 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 bg-axon-accent/10 flex items-center justify-center group-hover:bg-axon-accent/20 transition-colors">
+                                        <svg class="w-5 h-5 text-axon-accent" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-sm">Deploy Module</div>
+                                        <div class="text-[0.65rem] theme-text-muted">INIT_NEW_INSTANCE</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full p-3 md:p-4 border theme-border text-left hover:bg-black/5 dark:hover:bg-white/5 hover:border-axon-accent/50 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 bg-axon-accent/10 flex items-center justify-center group-hover:bg-axon-accent/20 transition-colors">
+                                        <svg class="w-5 h-5 text-axon-accent" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-sm">Sync All Nodes</div>
+                                        <div class="text-[0.65rem] theme-text-muted">BROADCAST_UPDATE</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full p-3 md:p-4 border theme-border text-left hover:bg-black/5 dark:hover:bg-white/5 hover:border-axon-accent/50 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 bg-axon-accent/10 flex items-center justify-center group-hover:bg-axon-accent/20 transition-colors">
+                                        <svg class="w-5 h-5 text-axon-accent" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-sm">Generate Report</div>
+                                        <div class="text-[0.65rem] theme-text-muted">EXPORT_ANALYTICS</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full p-3 md:p-4 border theme-border text-left hover:bg-black/5 dark:hover:bg-white/5 hover:border-axon-accent/50 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 bg-axon-accent/10 flex items-center justify-center group-hover:bg-axon-accent/20 transition-colors">
+                                        <svg class="w-5 h-5 text-axon-accent" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-sm">Security Audit</div>
+                                        <div class="text-[0.65rem] theme-text-muted">RUN_PERIMETER_SCAN</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer
+                    class="mt-6 md:mt-8 pt-4 md:pt-6 border-t theme-border flex flex-col md:flex-row justify-between gap-4 theme-text-muted text-xs">
+                    <div>© 2024 AXON SYSTEMIC LTD.</div>
+                    <div>ADMIN_CONSOLE // TECTONIC_V4</div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+
+            // Check for saved theme preference or default to dark
+            const savedTheme = localStorage.getItem('axon-theme') || 'dark';
+            html.classList.remove('dark', 'light');
+            html.classList.add(savedTheme);
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const isDark = html.classList.contains('dark');
+                    html.classList.remove('dark', 'light');
+                    html.classList.add(isDark ? 'light' : 'dark');
+                    localStorage.setItem('axon-theme', isDark ? 'light' : 'dark');
+                });
+            }
+
+            // Mobile menu toggle functionality
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileBackdrop = document.getElementById('mobile-backdrop');
+            let isMenuOpen = false;
+
+            function toggleMenu() {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    sidebar.classList.remove('-translate-x-full');
+                    mobileBackdrop.classList.remove('hidden');
+                    setTimeout(() => {
+                        mobileBackdrop.classList.remove('opacity-0');
+                    }, 10);
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    mobileBackdrop.classList.add('opacity-0');
+                    setTimeout(() => {
+                        mobileBackdrop.classList.add('hidden');
+                    }, 300);
+                }
+            }
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', toggleMenu);
+            }
+
+            if (mobileBackdrop) {
+                mobileBackdrop.addEventListener('click', toggleMenu);
+            }
+
+            // Close menu when clicking on a sidebar link (mobile)
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024 && isMenuOpen) {
+                    isMenuOpen = false;
+                    mobileBackdrop.classList.add('hidden', 'opacity-0');
+                    sidebar.classList.remove('-translate-x-full');
+                } else if (window.innerWidth < 1024 && !isMenuOpen) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

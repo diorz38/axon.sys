@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON | Secure Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@300;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'axon-accent': '#ff4d00',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 1.1s cubic-bezier(0.19, 1, 0.22, 1)',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme variables */
+        :root {
+            --bg: #f5f5f5;
+            --bg-surface: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --structural: #e0e0e0;
+            --grid-line: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark {
+            --bg: #0a0a0a;
+            --bg-surface: #141414;
+            --text: #f0f0f0;
+            --text-muted: #888888;
+            --structural: #222222;
+            --grid-line: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .theme-bg {
+            background-color: var(--bg);
+        }
+
+        .theme-surface {
+            background-color: var(--bg-surface);
+        }
+
+        .theme-text {
+            color: var(--text);
+        }
+
+        .theme-text-muted {
+            color: var(--text-muted);
+        }
+
+        .theme-border {
+            border-color: var(--structural);
+        }
+
+        .scaffold-bg {
+            background-image:
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at 60% 40%, black, transparent);
+        }
+
+        .cta-button {
+            box-shadow: 6px 6px 0px #000;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 10px 10px 0px #000;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff4d00;
+            box-shadow: 0 0 0 2px rgba(255, 77, 0, 0.2);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .theme-toggle:hover {
+            color: #ff4d00;
+        }
+    </style>
+</head>
+
+<body class="font-inter h-screen leading-tight transition-colors duration-300 overflow-hidden">
+
+    <!-- Tectonic Scaffolding Grid Background -->
+    <div class="scaffold-bg fixed inset-0 -z-10"></div>
+
+    <!-- Main Container -->
+    <div class="grid grid-cols-12 w-full max-w-[1600px] mx-auto border-l border-r theme-border h-screen overflow-hidden">
+
+        <!-- Header -->
+        <header
+            class="col-span-12 flex justify-between items-center p-8 border-b theme-border backdrop-blur-md sticky top-0 z-50"
+            style="background-color: var(--bg); opacity: 0.95;">
+            <div class="font-black text-2xl tracking-tighter uppercase">Axon.Sys</div>
+            <div class="flex items-center gap-4">
+                <div class="font-mono text-xs uppercase theme-text-muted hidden sm:block">Secure Access // Node Gate
+                </div>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle"
+                    class="theme-toggle px-3 py-2 border theme-border font-mono text-xs uppercase tracking-wider transition-colors hover:border-axon-accent">
+                    <span class="dark:hidden">☀ LIGHT</span>
+                    <span class="hidden dark:inline">☾ DARK</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Login Shell -->
+        <section class="col-span-12 grid grid-cols-12 min-h-0 overflow-hidden">
+
+            <!-- Left Panel -->
+            <div
+                class="hidden lg:flex lg:col-span-6 py-16 px-6 lg:px-12 border-b lg:border-b-0 lg:border-r theme-border flex flex-col justify-between">
+                <div>
+                    <span class="font-mono text-xs uppercase theme-text-muted">// ACCESS PROTOCOL V4</span>
+                    <h1
+                        class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-[0.95] tracking-tight mt-4 animate-slide-up">
+                        Entry Point<br>For Core Systems.
+                    </h1>
+                    <p class="mt-8 theme-text-muted text-base leading-relaxed max-w-md">
+                        Log in to monitor spatial analytics, issue directives, and coordinate structural flow across
+                        distributed teams.
+                    </p>
+                </div>
+                <div class="mt-12 font-mono text-sm theme-text-muted">
+                    <span class="block mb-2 text-axon-accent">// STATUS</span>
+                    Connection stable. Latency 0.4s. Auth layers active.
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div
+                class="col-span-12 lg:col-span-6 py-16 px-6 lg:px-12 flex items-center justify-center bg-axon-accent/[0.02]">
+
+                <!-- Login Card -->
+                <div
+                    class="w-full max-w-md border theme-border p-8 lg:p-10 theme-surface shadow-[0_20px_60px_rgba(0,0,0,0.25)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+                    <h2 class="text-3xl font-bold mb-2">Operator Login</h2>
+                    <p class="theme-text-muted text-sm mb-8">Authenticate to access dashboards, live modules, and system
+                        logs.</p>
+
+                    <form>
+                        <!-- Email Field -->
+                        <div class="mb-6">
+                            <label for="email"
+                                class="block text-xs tracking-[0.2em] uppercase theme-text-muted mb-2 font-mono">
+                                Email Address
+                            </label>
+                            <input id="email" type="email" placeholder="you@axon.sys" required
+                                class="w-full py-4 px-4 bg-transparent border theme-border theme-text text-base transition-all duration-200">
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-6">
+                            <label for="password"
+                                class="block text-xs tracking-[0.2em] uppercase theme-text-muted mb-2 font-mono">
+                                Password
+                            </label>
+                            <input id="password" type="password" placeholder="********" required
+                                class="w-full py-4 px-4 bg-transparent border theme-border theme-text text-base transition-all duration-200">
+                        </div>
+
+                        <!-- Form Row -->
+                        <div
+                            class="flex justify-between items-center font-mono text-[0.7rem] uppercase theme-text-muted mb-8">
+                            <label class="flex items-center gap-2 cursor-pointer tracking-wider">
+                                <input type="checkbox" checked class="w-auto accent-axon-accent">
+                                Remember me
+                            </label>
+                            <a href="#"
+                                class="theme-text-muted hover:text-axon-accent transition-colors duration-200 no-underline">
+                                Reset Access
+                            </a>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="cta-button w-full bg-axon-accent text-white py-4 px-8 font-mono uppercase font-bold tracking-[0.2em] border-none cursor-pointer">
+                            Initialize
+                        </button>
+                    </form>
+
+                    <!-- Alt Action -->
+                    <div class="mt-6 font-mono text-xs uppercase theme-text-muted">
+                        New operator? <a href="#" class="text-axon-accent no-underline hover:underline">Request
+                            credentials</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('axon-theme') || 'dark';
+        html.classList.remove('dark', 'light');
+        html.classList.add(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            html.classList.remove('dark', 'light');
+            html.classList.add(isDark ? 'light' : 'dark');
+            localStorage.setItem('axon-theme', isDark ? 'light' : 'dark');
+        });
+    </script>
+</body>
+
+</html>
