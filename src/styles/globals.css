@@ -111,6 +111,35 @@
     border-color: var(--color-structural);
   }
 
+  /* Ensure dividers match card borders exactly */
+  .divide-y.divide-theme > * + * {
+    border-top-color: var(--color-structural) !important;
+    border-top-style: solid;
+    border-top-width: 1px;
+  }
+
+  /* Ensure log entry dividers perfectly match card borders */
+  .divide-y.divide-theme > div[class*="hover:bg"] + div[class*="hover:bg"] {
+    border-top-color: var(--color-structural) !important;
+  }
+
+  /* Make all divide-y borders more subtle */
+  .divide-y > * + * {
+    border-top-color: color-mix(in srgb, var(--color-structural) 30%, transparent) !important;
+  }
+
+  /* Make dividers more subtle inside cards */
+  .theme-surface .divide-y.divide-theme > * + * {
+    border-top-color: color-mix(in srgb, var(--color-structural) 30%, transparent) !important;
+    border-top-style: solid !important;
+    border-top-width: 1px !important;
+  }
+
+  /* Ensure consistent border width for card borders */
+  .border-b.theme-border {
+    border-bottom-width: 1px;
+  }
+
   /* Scaffold background */
   .scaffold-bg {
     background-image:

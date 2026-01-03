@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick, sh
           
           {/* Status Indicator */}
           {showStatus && (
-            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-500/30 rounded text-green-500 dark:text-green-400 text-xs">
+            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-green-500/10 border theme-border rounded text-green-500 dark:text-green-400 text-xs">
               <span className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-pulse"></span>
               ALL SYSTEMS ONLINE
             </div>

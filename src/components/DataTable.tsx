@@ -32,10 +32,10 @@ export function DataTable<T>({ data, columns, pageSize = 10 }: DataTableProps<T>
   })
 
   return (
-    <div className="theme-surface border theme-border rounded-lg overflow-hidden">
+    <div className="theme-surface border border-white/10 rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-black/5 dark:bg-white/5">
+          <thead className="bg-black/5 dark:bg-white/5 border-b border-white/10">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -46,15 +46,15 @@ export function DataTable<T>({ data, columns, pageSize = 10 }: DataTableProps<T>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-theme">
+          <tbody className="divide-y divide-white/10">
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
