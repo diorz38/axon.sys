@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useTheme } from '../contexts/ThemeContext'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { ScaffoldBackground } from '../components/ScaffoldBackground'
@@ -12,6 +13,7 @@ interface DashboardLayoutProps {
 
 const DashboardLayoutContent: React.FC<DashboardLayoutProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const { appWidth } = useTheme()
   const location = useLocation()
 
   const toggleSidebar = () => {
@@ -30,22 +32,23 @@ const DashboardLayoutContent: React.FC<DashboardLayoutProps> = ({ children }) =>
   return (
     <div className="min-h-screen font-mono">
       <ScaffoldBackground />
-      
-      <div className="flex min-h-screen">
-        <Sidebar 
-          isOpen={isSidebarOpen} 
+
+      <div className={`flex min-h-screen transition-all duration-300 ${appWidth === 'narrow' ? 'max-w-[80vw] mx-auto border-x theme-border shadow-2xl' : ''}`}>
+        <Sidebar
+          isOpen={isSidebarOpen}
           onClose={closeSidebar}
           onMobileToggle={toggleSidebar}
         />
-        
-        <main className="flex-1 lg:ml-64">
-          <Header 
+
+        <main className="flex-1 min-w-0">
+          <Header
             title={title}
             subtitle={subtitle}
             onMenuClick={toggleSidebar}
             showStatus={true}
           />
-          
+
+
           <div className="p-4 md:p-8">
             {children}
           </div>

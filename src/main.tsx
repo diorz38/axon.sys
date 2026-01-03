@@ -11,6 +11,7 @@ import { LandingPage } from './pages/LandingPage'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { SettingsPage } from './pages/SettingsPage'
 
 // Import module pages
 import { ProjectsListPage } from './pages/projects/ProjectsListPage'
@@ -29,24 +30,25 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MarketingLayout><LandingPage /></MarketingLayout>} />
+          <Route path="/settings" element={<DashboardLayout><SettingsPage /></DashboardLayout>} />
           <Route path="/login" element={<MarketingLayout><LoginPage /></MarketingLayout>} />
           <Route path="/dashboard" element={<DashboardLayout><DashboardPage /></DashboardLayout>} />
           <Route path="/profile" element={<DashboardLayout><ProfilePage /></DashboardLayout>} />
-          
+
           {/* Projects Module Routes */}
           <Route path="/projects/list" element={<DashboardLayout><ProjectsListPage /></DashboardLayout>} />
           <Route path="/projects/progress" element={<DashboardLayout><ProjectsProgressPage /></DashboardLayout>} />
           <Route path="/projects/monitoring" element={<DashboardLayout><ProjectsMonitoringPage /></DashboardLayout>} />
-          
+
           {/* Services Module Routes */}
           <Route path="/services/tickets" element={<DashboardLayout><ServicesTicketsPage /></DashboardLayout>} />
           <Route path="/services/assets" element={<DashboardLayout><ServicesAssetsPage /></DashboardLayout>} />
-          
+
           {/* Admin Module Routes */}
           <Route path="/admin/users" element={<DashboardLayout><AdminUsersPage /></DashboardLayout>} />
           <Route path="/admin/roles" element={<DashboardLayout><AdminRolesPage /></DashboardLayout>} />
           <Route path="/admin/permissions" element={<DashboardLayout><AdminPermissionsPage /></DashboardLayout>} />
-          
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

@@ -6,7 +6,8 @@ import {
   X,
   User,
   Home,
-  ChevronDown
+  ChevronDown,
+  Settings
 } from 'lucide-react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useModule } from '../contexts/ModuleContext'
@@ -71,17 +72,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
       )}
 
       {/* Sidebar */}
-      <aside 
-        className={`w-64 border-r theme-border theme-bg backdrop-blur-md flex flex-col fixed h-full z-50 lg:z-40 transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
+      <aside
+        className={`w-64 border-r theme-border theme-bg backdrop-blur-md flex flex-col fixed inset-y-0 left-0 z-50 lg:sticky lg:top-0 lg:h-screen lg:z-auto transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          } shrink-0`}
         style={{ backgroundColor: 'var(--color-bg)', opacity: 0.95 }}
       >
         {/* Sidebar Header with Module Switcher */}
         <div className="p-4 border-b theme-border relative" ref={moduleDropdownRef}>
           <div className="font-black text-xl tracking-tighter uppercase mb-1">Axon.Sys</div>
           <div className="text-[0.65rem] uppercase theme-text-muted mb-3">// ADMIN_PANEL_V4</div>
-          
+
           {/* Module Switcher Dropdown */}
           <button
             onClick={() => setIsModuleDropdownOpen(!isModuleDropdownOpen)}
@@ -103,9 +103,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
                   )}
                   <button
                     onClick={() => handleModuleChange(module.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${
-                      currentModule === module.id ? 'bg-axon-accent/10 text-axon-accent' : 'theme-text'
-                    }`}
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${currentModule === module.id ? 'bg-axon-accent/10 text-axon-accent' : 'theme-text'
+                      }`}
                   >
                     <module.icon className="w-4 h-4" />
                     <span>{module.label}</span>
@@ -133,9 +132,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
                   <Link
                     key={route.path}
                     to={route.path}
-                    className={`sidebar-link flex items-center gap-3 px-6 py-3 text-sm border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${
-                      isActive ? 'active' : 'theme-text-muted'
-                    }`}
+                    className={`sidebar-link flex items-center gap-3 px-6 py-3 text-sm border-l-2 border-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${isActive ? 'active' : 'theme-text-muted'
+                      }`}
                     onClick={onClose}
                   >
                     <Icon className="w-4 h-4" />
@@ -187,6 +185,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
                   <Home className="w-4 h-4" />
                   Landing Page
                 </Link>
+                <Link
+                  to="/settings"
+                  className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                  onClick={() => setIsUserMenuOpen(false)}
+                >
+                  <Settings className="w-4 h-4" />
+                  Settings
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-2 px-4 py-2 text-sm w-full text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-red-500"
@@ -200,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onMobileToggl
         </div>
 
         {/* Mobile Toggle Button */}
-        <button 
+        <button
           className="lg:hidden absolute -right-10 top-4 p-2 bg-[var(--color-bg)] border theme-border rounded-r"
           onClick={onMobileToggle}
         >
