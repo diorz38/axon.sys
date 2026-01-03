@@ -2,6 +2,9 @@
 
 A modern enterprise management system built with React, TypeScript, and Vite. AXON.SYS provides a tectonic approach to workspace management with a sophisticated, cyberpunk-inspired interface for managing projects, services, and administrative operations.
 
+## 🌐 Live Demo
+Check out the live application: [https://diorz38.github.io/axon.sys](https://diorz38.github.io/axon.sys)
+
 ## 🚀 Features
 
 ### Core Modules
